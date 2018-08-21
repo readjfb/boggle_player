@@ -85,13 +85,17 @@ def adjacent(val1,val2,lst):
     return False
 
 def solve_board(board):
-    def turtle(board, x,y, curr_path, letters=''):
+    def turtle(board, x, y, curr_path, letters=''):
+        #crossing lets the path cross over itself diagonaly [if true]; min_num_lett is the min number of letters for a word
         crossing, min_num_lett = False, 3
+        
         curr_path.append((x,y))
         letters += str(board[x][y])
-        #if we've found a word
+        
+        #checking to see if the current path has made a letter, and if it has been the right length
         if dictionary.contains(letters) and len(letters) >= min_num_lett:
             all_words.append(letters)
+       
         #if there are no more possible words
         elif not dictionary.one_autocomplete(letters):
           return 0
@@ -109,7 +113,7 @@ def solve_board(board):
             turtle(board,x,y+1, list(curr_path), str(letters))
 
         if not crossing:
-            if (x-1, y+1) not in curr_path and not adjacent((x-1,y),(x,y+1), curr_path):
+            if (x-1,y+1) not in curr_path and not adjacent((x-1,y),(x,y+1), curr_path):
                 turtle(board,x-1,y+1,list(curr_path), str(letters))
 
             if (x+1,y+1) not in curr_path and not adjacent((x+1,y), (x,y+1), curr_path):
