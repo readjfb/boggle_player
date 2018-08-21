@@ -1,8 +1,6 @@
 '''Made by Jackson Bremen ||| Summer 2018
 Sorry for the garbage code
 Trie Datastructure copied from github linked below, one additional function added
-The rest was all Jackson's doing
-Program requires list of all words in english dictionary and a file with the board, each char has to be separated by 1 space (at least)
 https://www.wordplays.com/boggle has line crossing be legal
 '''
 
@@ -122,20 +120,6 @@ def solve_board(board):
             
             if (x+1,y-1) not in curr_path and not adjacent((x+1,y), (x,y-1), curr_path):
                 turtle(board,x+1,y-1,list(curr_path), str(letters))
-
-
-            #depreciated garbage code that is only in there for posterity
-            # if (x-1,y+1) not in curr_path and (((x,y+1) not in curr_path != (x-1,y) not in curr_path) or (bool((x,y+1) not in curr_path) ^ bool((x-1,y) not in curr_path) == True)):
-            #     turtle(board,x-1,y+1,list(curr_path), str(letters))
-
-            # if (x+1,y+1) not in curr_path and (((x,y+1) not in curr_path != (x+1,y) not in curr_path) or (bool((x,y+1) not in curr_path) ^ bool((x+1,y) not in curr_path) == True)):
-            #     turtle(board,x+1,y+1,list(curr_path), str(letters))
-            
-            # if (x-1,y-1) not in curr_path and (((x,y-1) not in curr_path != (x-1,y) not in curr_path) or (bool((x,y-1) not in curr_path) ^ bool((x-1,y) not in curr_path) == True)):
-            #     turtle(board,x-1,y-1,list(curr_path), str(letters))
-
-            # if (x+1,y-1) not in curr_path and (((x,y-1) not in curr_path != (x+1,y) not in curr_path) or (bool((x,y-1) not in curr_path) ^ bool((x+1,y) not in curr_path) == True)):
-            #     turtle(board,x+1,y-1,list(curr_path), str(letters))
         else:
             #diagonals, allows crossing over
             if (x+1,y+1) not in curr_path:
@@ -149,13 +133,12 @@ def solve_board(board):
 
             if (x-1,y+1) not in curr_path:
                 turtle(board,x-1,y+1, list(curr_path), str(letters))
-    #all_words is global, and as lists are global by default in python, I'm using it for the correct purpose
+    #all_words is global, as lists are global by default in python
     all_words = []
     for x, y_l in enumerate(board):
         for y, x_l in enumerate(y_l):
             curr_path = [(-1,-1)] + [(-1,i) for i in range(len(board)+1)] + [(len(board), i) for i in range(len(board)+1)] + [(i,-1) for i in range(len(board)+1)] + [(i,len(board)) for i in range(len(board)+1)] + ['|||']
-            turtle(board,x,y,[i for i in curr_path])
-            
+            turtle(board,x,y,[i for i in curr_path])          
     return all_words
 
 def score_calc(words):
@@ -169,7 +152,6 @@ def score_calc(words):
             total += val_table[len(item)]
         numChars+= len(item)
     return total,numChars
-
 
 print_board(board)
 solution = solve_board(board)
