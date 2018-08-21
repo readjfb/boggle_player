@@ -8,3 +8,5 @@ to output it.
 The Applescript script can be used to paste all of the words into another program one by one
 To do so, simply copy the comma separated list, and paste it into the dialog box when prompted
 It will then paste the words one by one
+
+The Trie tree that is used to store the dictionary is from the Github page linked in the .py file
