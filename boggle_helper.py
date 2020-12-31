@@ -5,56 +5,7 @@ https://www.wordplays.com/boggle has line crossing be legal
 '''
 
 import readline
-
-#NEEDED FOR THE TRIE
-from functools import reduce
-class Trie(object):
-    # https://github.com/vivekn/autocomplete/blob/master/trie.py#L11
-    def __init__(self):
-        self.children = {}
-        self.flag = False # Flag to represent that a word ends at this node
-
-    def add(self, char):
-        self.children[char] = Trie()
-
-    def insert(self, word):
-        node = self
-        for char in word:
-            if char not in node.children:
-                node.add(char)
-            node = node.children[char]
-        node.flag = True
-
-    def contains(self, word):
-        node = self
-        for char in word:
-            if char not in node.children:
-                return False
-            node = node.children[char]
-        return node.flag
-
-    def all_suffixes(self, prefix):
-        results = set()
-        if self.flag:
-            results.add(prefix)
-        if not self.children: return results
-        return reduce(lambda a, b: a | b, [node.all_suffixes(prefix + char) for (char, node) in self.children.items()]) | results
-
-    def autocomplete(self, prefix):
-        node = self
-        for char in prefix:
-            if char not in node.children:
-                return set()
-            node = node.children[char]
-        return list(node.all_suffixes(prefix))
-
-    def one_autocomplete(self,prefix):
-        node = self
-        for char in prefix:
-            if char not in node.children:
-                return False
-            node = node.children[char]
-        return True
+from Trie import Trie
 
 dictionary = Trie()
 with open('allScrabbleWords.txt','r') as file:
@@ -137,12 +88,15 @@ def solve_board(board):
 
             if (x-1,y+1) not in curr_path:
                 turtle(board,x-1,y+1, list(curr_path), str(letters))
-    #all_words is global, as lists are global by default in python
+   
+    # all_words is global, as lists are global by default in python
     all_words = []
+    # board exterior is a list of the points on the exterior of the board, such that the turtle won't go to them
+    board_exterior = [(-1,-1)] + [(-1,i) for i in range(len(board)+1)] + [(len(board), i) for i in range(len(board)+1)] + [(i,-1) for i in range(len(board)+1)] + [(i,len(board)) for i in range(len(board)+1)]
+
     for x, y_l in enumerate(board):
         for y, x_l in enumerate(y_l):
-            curr_path = [(-1,-1)] + [(-1,i) for i in range(len(board)+1)] + [(len(board), i) for i in range(len(board)+1)] + [(i,-1) for i in range(len(board)+1)] + [(i,len(board)) for i in range(len(board)+1)] + ['|||']
-            turtle(board,x,y,[i for i in curr_path])          
+            turtle(board,x,y, [i for i in board_exterior])          
     return all_words
 
 def score_calc(words):
