@@ -36,11 +36,11 @@ def adjacent(val1,val2,lst):
     return False
 
 def solve_board(board):
-    def turtle(board, x, y, curr_path, letters=''):
+    def turtle(board, x, y, invalid_spaces, letters=''):
         #crossing lets the path cross over itself diagonaly [if true]; min_num_lett is the min number of letters for a word
         crossing, min_num_lett = False, 3
         
-        curr_path.append((x,y))
+        invalid_spaces.append((x,y))
         letters += str(board[x][y])
         
         #checking to see if the current path has made a letter, and if it has been the right length
@@ -51,43 +51,43 @@ def solve_board(board):
         elif not dictionary.one_autocomplete(letters):
           return 0
 
-        if (x+1,y) not in curr_path:
-            turtle(board,x+1,y, list(curr_path), str(letters))
+        if (x+1,y) not in invalid_spaces:
+            turtle(board,x+1,y, list(invalid_spaces), str(letters))
 
-        if (x-1,y) not in curr_path:
-            turtle(board,x-1,y, list(curr_path), str(letters))
+        if (x-1,y) not in invalid_spaces:
+            turtle(board,x-1,y, list(invalid_spaces), str(letters))
 
-        if (x,y-1) not in curr_path:
-            turtle(board,x,y-1, list(curr_path), str(letters))
+        if (x,y-1) not in invalid_spaces:
+            turtle(board,x,y-1, list(invalid_spaces), str(letters))
 
-        if (x,y+1) not in curr_path:
-            turtle(board,x,y+1, list(curr_path), str(letters))
+        if (x,y+1) not in invalid_spaces:
+            turtle(board,x,y+1, list(invalid_spaces), str(letters))
 
         if not crossing:
-            if (x-1,y+1) not in curr_path and not adjacent((x-1,y),(x,y+1), curr_path):
-                turtle(board,x-1,y+1,list(curr_path), str(letters))
+            if (x-1,y+1) not in invalid_spaces and not adjacent((x-1,y),(x,y+1), invalid_spaces):
+                turtle(board,x-1,y+1,list(invalid_spaces), str(letters))
 
-            if (x+1,y+1) not in curr_path and not adjacent((x+1,y), (x,y+1), curr_path):
-                turtle(board,x+1,y+1,list(curr_path), str(letters))
+            if (x+1,y+1) not in invalid_spaces and not adjacent((x+1,y), (x,y+1), invalid_spaces):
+                turtle(board,x+1,y+1,list(invalid_spaces), str(letters))
             
-            if (x-1,y-1) not in curr_path and not adjacent((x-1,y), (x,y-1), curr_path):
-                turtle(board,x-1,y-1,list(curr_path), str(letters))
+            if (x-1,y-1) not in invalid_spaces and not adjacent((x-1,y), (x,y-1), invalid_spaces):
+                turtle(board,x-1,y-1,list(invalid_spaces), str(letters))
             
-            if (x+1,y-1) not in curr_path and not adjacent((x+1,y), (x,y-1), curr_path):
-                turtle(board,x+1,y-1,list(curr_path), str(letters))
+            if (x+1,y-1) not in invalid_spaces and not adjacent((x+1,y), (x,y-1), invalid_spaces):
+                turtle(board,x+1,y-1,list(invalid_spaces), str(letters))
         else:
             #diagonals, allows crossing over
-            if (x+1,y+1) not in curr_path:
-                turtle(board,x+1,y+1, list(curr_path), str(letters))
+            if (x+1,y+1) not in invalid_spaces:
+                turtle(board,x+1,y+1, list(invalid_spaces), str(letters))
 
-            if (x+1,y-1) not in curr_path:
-                turtle(board,x+1,y-1, list(curr_path), str(letters))
+            if (x+1,y-1) not in invalid_spaces:
+                turtle(board,x+1,y-1, list(invalid_spaces), str(letters))
 
-            if (x-1,y-1) not in curr_path:
-                turtle(board,x-1,y-1, list(curr_path), str(letters))
+            if (x-1,y-1) not in invalid_spaces:
+                turtle(board,x-1,y-1, list(invalid_spaces), str(letters))
 
-            if (x-1,y+1) not in curr_path:
-                turtle(board,x-1,y+1, list(curr_path), str(letters))
+            if (x-1,y+1) not in invalid_spaces:
+                turtle(board,x-1,y+1, list(invalid_spaces), str(letters))
    
     # all_words is global, as lists are global by default in python
     all_words = []
