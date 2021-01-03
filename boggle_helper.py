@@ -140,5 +140,6 @@ def score_calc(words):
 
 print_board(board)
 solution = solve_board(board)
+print(len(solution), len(set(solution)))
 print(','.join(solution), '\n', len(solution), 'words, max score is:',
       str(score_calc(solution)), 'characters')
