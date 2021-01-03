@@ -49,7 +49,7 @@ def solve_board(board):
         # checking to see if the current path has made a letter, and if it has
         # been the right length
         if dictionary.contains(letters) and len(letters) >= min_num_lett:
-            all_words.append(letters)
+            all_words.add(letters)
 
         #if there are no more possible words
         elif not dictionary.one_autocomplete(letters):
@@ -109,7 +109,7 @@ def solve_board(board):
                 turtle(board, *p7, list(inv_spaces), str(letters))
 
     # all_words is global, as lists are global by default in python
-    all_words = []
+    all_words = set([])
     # board exterior is a list of the points on the exterior of the board, such
     # that the turtle won't go to them
     board_exterior = [(-1, -1)]
