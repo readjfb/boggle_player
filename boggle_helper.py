@@ -41,7 +41,7 @@ def solve_board(board):
     def turtle(board, x, y, inv_spaces, letters=''):
         #crossing lets the path cross over itself diagonaly [if true];
         # min_num_lett is the min number of letters for a word
-        crossing, min_num_lett = False, 3
+        crossing, min_num_lett = True, 3
 
         inv_spaces.append((x, y))
         letters += str(board[x][y])
@@ -70,44 +70,43 @@ def solve_board(board):
         p7 = (x + 1, y + 1)
 
         if p4 not in inv_spaces:
-            turtle(board, x + 1, y, list(inv_spaces), str(letters))
+            turtle(board, *p4, list(inv_spaces), str(letters))
 
         if p3 not in inv_spaces:
-            turtle(board, x - 1, y, list(inv_spaces), str(letters))
+            turtle(board, *p3, list(inv_spaces), str(letters))
 
         if p1 not in inv_spaces:
-            turtle(board, x, y - 1, list(inv_spaces), str(letters))
+            turtle(board, *p1, list(inv_spaces), str(letters))
 
         if p6 not in inv_spaces:
-            turtle(board, x, y + 1, list(inv_spaces), str(letters))
+            turtle(board, *p6, list(inv_spaces), str(letters))
 
         if not crossing:
-            if p5 not in inv_spaces and not adjacent(p3,
-                                                     (x, y + 1), inv_spaces):
-                turtle(board, x - 1, y + 1, list(inv_spaces), str(letters))
-
-            if p7 not in inv_spaces and not adjacent(p4,
-                                                     (x, y + 1), inv_spaces):
-                turtle(board, x + 1, y + 1, list(inv_spaces), str(letters))
-
             if p0 not in inv_spaces and not adjacent(p3, p1, inv_spaces):
-                turtle(board, x - 1, y - 1, list(inv_spaces), str(letters))
+                turtle(board, *p0, list(inv_spaces), str(letters))
 
             if p2 not in inv_spaces and not adjacent(p4, p1, inv_spaces):
-                turtle(board, x + 1, y - 1, list(inv_spaces), str(letters))
+                turtle(board, *p2, list(inv_spaces), str(letters))
+
+            if p5 not in inv_spaces and not adjacent(p3, p6, inv_spaces):
+                turtle(board, *p5, list(inv_spaces), str(letters))
+
+            if p7 not in inv_spaces and not adjacent(p4, p6, inv_spaces):
+                turtle(board, *p7, list(inv_spaces), str(letters))
+
         else:
             #diagonals, allows crossing over
             if p0 not in inv_spaces:
-                turtle(board, x - 1, y - 1, list(inv_spaces), str(letters))
+                turtle(board, *p0, list(inv_spaces), str(letters))
 
             if p2 not in inv_spaces:
-                turtle(board, x + 1, y - 1, list(inv_spaces), str(letters))
+                turtle(board, *p2, list(inv_spaces), str(letters))
 
             if p5 not in inv_spaces:
-                turtle(board, x - 1, y + 1, list(inv_spaces), str(letters))
+                turtle(board, *p5, list(inv_spaces), str(letters))
 
             if p7 not in inv_spaces:
-                turtle(board, x + 1, y + 1, list(inv_spaces), str(letters))
+                turtle(board, *p7, list(inv_spaces), str(letters))
 
     # all_words is global, as lists are global by default in python
     all_words = []
